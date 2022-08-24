@@ -1,0 +1,23 @@
+.post-table {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .post-items {
+    width: 800px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .item {
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid silver;
+    }
+  }
+}
