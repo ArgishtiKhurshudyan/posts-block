@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import {DataGrid} from '@mui/x-data-grid';
 import {useEffect, useState} from "react";
 import {Delete} from "@mui/icons-material";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import Profile from "../Profile";
 
 export default function DataGridDemo() {
   const [data, setData] = useState([]);
@@ -45,10 +47,10 @@ export default function DataGridDemo() {
     {
       field: 'phone',
       headerName: 'Phone',
-      type: "number",
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
+      editable: true
     },
     {
       field: 'delete',
@@ -56,9 +58,21 @@ export default function DataGridDemo() {
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
-      renderCell: () => <Delete style={{cursor: "pointer", color:"red"}} onClick={() => {
+      renderCell: () => <Delete style={{cursor: "pointer", color: "red"}} onClick={() => {
         const selectedIDs = new Set(selectionModel);
         setData((data) => data.filter((x) => !selectedIDs.has(x.id)));
+      }
+      }/>
+    },
+    {
+      field: 'profile',
+      headerName: 'Profile',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      renderCell: () => <PersonOutlineIcon style={{cursor: "pointer", color: "blue"}} onClick={() => {
+        const selectedIDs = new Set(selectionModel);
+        setData((data) => data.filter((x) => selectedIDs.has(x.id)));
       }
       }/>
     },
@@ -67,14 +81,14 @@ export default function DataGridDemo() {
   return (
     <div className="post-table">
       <div className="post-items">
-        <Box sx={{height: 400, width: '800px'}}>
+        <Box sx={{height: 400, width: '100%'}}>
           <DataGrid
             rows={data}
             columns={columns}
             pageSize={4}
             rowsPerPageOptions={[5]}
             checkboxSelection
-            disableSelectionOnClick
+            // disableSelectionOnClick
             experimentalFeatures={{newEditingApi: true}}
             onSelectionModelChange={(ids) => {
               setSelectionModel(ids);
