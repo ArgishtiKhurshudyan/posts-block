@@ -3,11 +3,11 @@ import "./posts.scss"
 import Box from '@mui/material/Box';
 import {DataGrid} from '@mui/x-data-grid';
 import {useEffect, useState} from "react";
-import {Delete} from "@mui/icons-material";
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import {Delete, Person} from "@mui/icons-material";
 import Profile from "../Profile";
+import {Link} from "react-router-dom";
 
-export default function DataGridDemo() {
+export default function DataGridDemo({ setSelectedItem }) {
   const [data, setData] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
 
@@ -43,6 +43,7 @@ export default function DataGridDemo() {
       headerName: 'Email',
       width: 110,
       editable: true,
+
     },
     {
       field: 'phone',
@@ -57,7 +58,7 @@ export default function DataGridDemo() {
       headerName: 'Delete',
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
-      width: 160,
+      width: 90,
       renderCell: () => <Delete style={{cursor: "pointer", color: "red"}} onClick={() => {
         const selectedIDs = new Set(selectionModel);
         setData((data) => data.filter((x) => !selectedIDs.has(x.id)));
@@ -69,12 +70,10 @@ export default function DataGridDemo() {
       headerName: 'Profile',
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
-      width: 160,
-      renderCell: () => <PersonOutlineIcon style={{cursor: "pointer", color: "blue"}} onClick={() => {
-        const selectedIDs = new Set(selectionModel);
-        setData((data) => data.filter((x) => selectedIDs.has(x.id)));
-      }
-      }/>
+      width: 90,
+      renderCell: (params) => (
+        <Link to="/profile"><Person onClick={() => setSelectedItem(params.row)}/></Link>
+      )
     },
   ]
 
@@ -86,7 +85,7 @@ export default function DataGridDemo() {
             rows={data}
             columns={columns}
             pageSize={4}
-            rowsPerPageOptions={[5]}
+            rowsPerPageOptions={[4]}
             checkboxSelection
             // disableSelectionOnClick
             experimentalFeatures={{newEditingApi: true}}
