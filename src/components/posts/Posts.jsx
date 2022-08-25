@@ -6,10 +6,12 @@ import {useEffect, useState} from "react";
 import {Delete, Person} from "@mui/icons-material";
 import Profile from "../Profile";
 import {Link} from "react-router-dom";
+import Navbar from "../navbar/Navbar";
 
-export default function DataGridDemo({ setSelectedItem }) {
+export default function DataGridDemo({setSelectedItem}) {
   const [data, setData] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [darkMode, setDarkMode] = useState(true)
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -78,23 +80,27 @@ export default function DataGridDemo({ setSelectedItem }) {
   ]
 
   return (
-    <div className="post-table">
-      <div className="post-items">
-        <Box sx={{height: 400, width: '100%'}}>
-          <DataGrid
-            rows={data}
-            columns={columns}
-            pageSize={4}
-            rowsPerPageOptions={[4]}
-            checkboxSelection
-            // disableSelectionOnClick
-            experimentalFeatures={{newEditingApi: true}}
-            onSelectionModelChange={(ids) => {
-              setSelectionModel(ids);
-            }}
-          />
-        </Box>
+    <>
+      <div className="post-table" style={darkMode ? {backgroundColor: "#282828f7"} : {backgroundColor: "white"}}>
+        <Navbar setDarkMode={setDarkMode} darkMode={darkMode}/>
+        <div className="post-items">
+          <Box sx={{height: 400, width: '100%'}}>
+            <DataGrid
+              style={darkMode ? {color: "#747e83", backgroundColor: "#ededed"} : {color: "black"}}
+              rows={data}
+              columns={columns}
+              pageSize={4}
+              rowsPerPageOptions={[4]}
+              checkboxSelection
+              // disableSelectionOnClick
+              experimentalFeatures={{newEditingApi: true}}
+              onSelectionModelChange={(ids) => {
+                setSelectionModel(ids);
+              }}
+            />
+          </Box>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

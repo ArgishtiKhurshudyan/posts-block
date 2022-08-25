@@ -1,0 +1,19 @@
+.navbar-container {
+  width: 99%;
+  height: 65px;
+  background-color: #414344;
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+
+  .dark-mode {
+    color: antiquewhite;
+    cursor: pointer;
+    width: 100px;
+    height: 27px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
